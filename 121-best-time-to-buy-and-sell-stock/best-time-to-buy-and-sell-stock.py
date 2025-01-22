@@ -4,10 +4,14 @@ class Solution:
         if len(prices)==0 or len(prices)==1:
             return max_profit    
         left=0
-        right=1            
+        right=1      
+        sell_price=0
+        buy_price=0      
         while left<=right and right<len(prices):
-            if prices[right]-prices[left]>=0:
-                max_profit=max(max_profit,prices[right]-prices[left])
+            sell_price=prices[right]
+            buy_price=prices[left]
+            if sell_price-buy_price>=0:
+                max_profit=max(max_profit,sell_price-buy_price)
                 right+=1
             else:
                 left=right
