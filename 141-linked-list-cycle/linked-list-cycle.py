@@ -6,11 +6,11 @@
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        seen=set() ## hashset, But this is O(n) space solution
-        cur=head
-        while cur:
-            if cur in seen:
+        slow,fast=head,head
+        while fast and fast.next: ## basically fast.next will check for end of linked list
+        ## fast.next.next would be null if its the end of linkedin list
+            slow=slow.next
+            fast=fast.next.next
+            if slow==fast:
                 return True
-            seen.add(cur)
-            cur=cur.next
         return False  
