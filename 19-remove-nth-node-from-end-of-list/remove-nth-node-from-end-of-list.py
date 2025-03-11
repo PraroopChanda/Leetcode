@@ -5,22 +5,20 @@
 #         self.next = next
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        ## Doing a 2 pass thing, getting the length and doing it
-        ## space is complexity remains O(1)
-        curr=head
-        length=0
-        while curr:
-            length+=1
-            curr=curr.next
-        remove_index=length-n
-        if remove_index==0:
-            return head.next
-        curr=head
-        idx=0
-        while curr:
-            if remove_index-1==idx:
-                curr.next=curr.next.next
-                break
-            curr=curr.next
-            idx+=1
-        return head  
+        ## doing with 2 pointer
+        dummy=ListNode(0,head)
+        first=head
+        second=dummy ## this will help me in the edge case when its just 1
+        if head.val == None: ## edge case
+            return head
+        for i in range(n):
+            first=first.next
+        ## now iterating both
+        ## right now they exactly have a gap of n nodes
+        while first: 
+            first=first.next
+            second=second.next
+        ## now removing the node
+        second.next=second.next.next ## This will help in the edge case as second is dummy this time
+
+        return dummy.next   
