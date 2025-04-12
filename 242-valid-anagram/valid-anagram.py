@@ -12,7 +12,4 @@ class Solution:
             dict_1[y]-=1    
             if dict_1[y]<0:
                 return False
-        return all(value==0 for value in dict_1.values())        
-        if any(x!=0 for x in dict_1.values()):
-            return False        
-        return True         
+        return all(value==0 for value in dict_1.values())               
