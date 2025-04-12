@@ -9,8 +9,10 @@ class Solution:
         for y in t:
             if y not in dict_1:
                 return False
-            else:
-                dict_1[y]-=1
+            dict_1[y]-=1    
+            if dict_1[y]<0:
+                return False
+        return all(value==0 for value in dict_1.values())        
         if any(x!=0 for x in dict_1.values()):
             return False        
         return True         
