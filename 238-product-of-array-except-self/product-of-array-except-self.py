@@ -13,12 +13,8 @@ class Solution:
         #print(prefix)
         postfix=1
         for y in range(len(nums)-1,-1,-1):
-            if y==len(nums)-1:
-                prefix[y]*=1
-                postfix*=nums[y]
-            else:
-                prefix[y]*=postfix
-                postfix*=nums[y]       
+            prefix[y]*=postfix
+            postfix*=nums[y]       
         print(prefix)
         return prefix            
         for y in range(len(nums)-1,-1,-1):
