@@ -10,7 +10,17 @@ class Solution:
                 prefix.append(1)
             else:
                 prefix.append(nums[x-1]*prefix[x-1])
-        #print(prefix)        
+        #print(prefix)
+        postfix=1
+        for y in range(len(nums)-1,-1,-1):
+            if y==len(nums)-1:
+                prefix[y]*=1
+                postfix*=nums[y]
+            else:
+                prefix[y]*=postfix
+                postfix*=nums[y]       
+        print(prefix)
+        return prefix            
         for y in range(len(nums)-1,-1,-1):
             if y ==len(nums)-1:
                 postfix[y]=1
