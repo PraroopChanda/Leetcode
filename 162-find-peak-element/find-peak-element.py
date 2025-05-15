@@ -29,14 +29,15 @@ class Solution:
 
 
         ## trying to do using binary search log(n) solution
+        ## start looking on the other half, reducing the search space
         l=0
         r=len(nums)-1
         while l<=r:
             mid =(l+r)//2  ##mid is the element that is being now used for comparison
-            if mid>0 and nums[mid]<nums[mid-1]:
+            if mid>0 and nums[mid]<nums[mid-1]: ## logic is basically we will always have a bigger element
                 ## change right 
                 r=mid-1
-            elif mid < len(nums)-1 and nums[mid]<nums[mid+1]:
+            elif mid < len(nums)-1 and nums[mid]<nums[mid+1]: 
                 l=mid+1
             else:
                 return mid
