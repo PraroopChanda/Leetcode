@@ -7,38 +7,34 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        level_dict={}
-        qu=deque([(root,1)])# 1 is the depth here
-        level=1
         parent_dict={root.val:None}
+        qu=deque([root])
         while qu:
-            if p.val in level_dict and q.val in level_dict:
+            if p.val in parent_dict and q.val in parent_dict:
                 break
             for x in range(len(qu)):
-                curr,depth=qu.popleft()
-                level_dict[curr.val]=depth
+                curr=qu.popleft()
                 if curr.left:
-                    qu.append((curr.left,depth+1))
-                    parent_dict[curr.left.val] = curr
+                    qu.append(curr.left)
+                    parent_dict[curr.left.val]=curr ## storing the parent information
                 if curr.right:
-                    qu.append((curr.right, depth+1))   
-                    parent_dict[curr.right.val] = curr
-
-        # 2. Create set of all ancestors of p
-        ancestors = set()
+                    qu.append(curr.right)
+                    parent_dict[curr.right.val]=curr
+        ## traversing up the chain
+        ancestor=set()
         while p:
-            print(p.val)
-            ancestors.add(p.val)
-            p = parent_dict[p.val] ## travers upward the tree level by level
-            
+            ancestor.add(p.val)
+            p=parent_dict[p.val] ## basically traversing up the graph
 
-        # 3. Traverse q's ancestry, return the first match
         while q:
-            if q.val in ancestors:
-                return q  # this TreeNode is the LCA
-            q = parent_dict[q.val]
+            if q.val in ancestor:
+                return q
+            q=parent_dict[q.val]    
 
-        print(level_dict)            
+
+                
+
+
                     
 
             
