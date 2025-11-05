@@ -8,19 +8,15 @@ class Solution:
             for x in arr:
                 dict_1[x]=1+dict_1.get(x,0)
             dict_1=dict(sorted(dict_1.items(),key=lambda x:x[1]))
-            print(dict_1)
             keys_list=list(dict_1.keys())
-            print(keys_list)
             for keys in range(len(keys_list)-1,-1,-1):
                 sum1+=keys_list[keys]*dict_1[keys_list[keys]]
                 freq-=1
-                print(freq,keys)
                 if freq==0:
                     break
             return sum1
         output=[]
         for i in range(len(nums)-k+1):
-            print(nums[i:i+k])
             output.append(xsum(nums[i:i+k],x))
         return output                
 
