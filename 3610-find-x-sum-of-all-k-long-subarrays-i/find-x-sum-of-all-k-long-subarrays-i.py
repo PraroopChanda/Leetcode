@@ -4,10 +4,10 @@ class Solution:
             freq=x
             sum1=0
             dict_1={}
-            arr=sorted(arr)
+            #arr=sorted(arr)
             for x in arr:
                 dict_1[x]=1+dict_1.get(x,0)
-            dict_1=dict(sorted(dict_1.items(),key=lambda x:x[1]))
+            dict_1=dict(sorted(dict_1.items(),key=lambda x:(x[1],x[0]))) ## basically if there is a tie--> sort on basis of keys (but first sort on basis of values)
             keys_list=list(dict_1.keys())
             for keys in range(len(keys_list)-1,-1,-1):
                 sum1+=keys_list[keys]*dict_1[keys_list[keys]]
