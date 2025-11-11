@@ -1,5 +1,4 @@
 class Twitter:
-
     def __init__(self):
         self.time=0 ## will be taking negative values to build a max heap
         self.tweetmap=defaultdict(list) ## (userID: [time,tweetId])
@@ -34,6 +33,11 @@ class Twitter:
     def unfollow(self, followerId: int, followeeId: int) -> None:
         if followeeId in self.followermap[followerId]:
             self.followermap[followerId].remove(followeeId)
+# '''
+# LOGIC --> from all the followe list , first take the last index values (that would be the most recent according to that user)
+# Next --> put all values in a maxheap and get the most recent value and then also push other value for that followe in that heap
+# pushing other values from that followe, will still result in most receent value among followes (because if it not recent it won't be picked)
+# '''            
         
 
 
