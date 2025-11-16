@@ -3,6 +3,9 @@ class Solution:
         result=[]
         sol=[]
 
+        ### Logic --> Basically to avoid duplicates once we pass on one element in the array
+        ## no need to consider it again, because all possible combinations have already been done with it
+        ## thats why we use, range(elem,len(candidates))
         def combsum(sol,elem):
             if sum(sol)==target:
                 result.append(sol[:])
@@ -14,7 +17,6 @@ class Solution:
                     combsum(sol,elem)
                     sol.pop()  
         combsum(sol,0)
-        print(result)
         return result              
                 
 
