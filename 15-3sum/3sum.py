@@ -1,24 +1,37 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        result=[]
         nums.sort()
-        for i,a in enumerate(nums):
-            if i>0 and a==nums[i-1]: ## a is the target here
-                continue ## don't want the same target here
-            start_pt, last_pt=i+1,len(nums)-1
-            while start_pt<last_pt:
-                threesum=a+nums[start_pt]+nums[last_pt]
-                if threesum>0:
-                    last_pt-=1
-                elif threesum<0:
-                    start_pt+=1
+        result=[]
+        length=len(nums)-1
+        result=[]
+        prev=1000000
+        for idx in range(len(nums)):
+            left=idx+1
+            right=length
+            target=nums[idx]
+            if nums[idx]!=prev:
+                prev=nums[idx]
+            else:
+                continue    
+            while left<right:
+                if nums[left]+nums[right]>-target:
+                    right-=1
+                elif nums[left]+nums[right]<-target:
+                    left+=1
                 else:
-                    result.append([a,nums[start_pt],nums[last_pt]])
-                    start_pt+=1 ##j is getting incremented
-                    last_pt-=1 ## basically last pt should also decrement
-                    ## now i have to update the counter
-                    while nums[start_pt]==nums[start_pt-1] and start_pt<last_pt:
-                        start_pt+=1 ## j repeated is being checked
+                    result.append([target,nums[left],nums[right]])
+                    left+=1
+                    right-=1
+                    while left<right and nums[left]==nums[left-1]:
+                        left+=1
 
-        return result
+        return result     
+
+
+
+
+
+
+
+
         
