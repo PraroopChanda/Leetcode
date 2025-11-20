@@ -4,14 +4,11 @@ class Solution:
         result=[]
         length=len(nums)-1
         result=[]
-        prev=1000000
         for idx in range(len(nums)):
             left=idx+1
             right=length
             target=nums[idx]
-            if nums[idx]!=prev:
-                prev=nums[idx]
-            else:
+            if idx>0 and nums[idx]==nums[idx-1]:
                 continue    
             while left<right:
                 if nums[left]+nums[right]>-target:
