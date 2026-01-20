@@ -33,33 +33,4 @@ class Solution:
                 if board[r][c]=="T":
                     board[r][c]="O"                
 
-
-
-
-
-
-        # visited=set()
-        # val_idx=[]
-
-        # for r in range(row_len):
-        #     for c in range(col_len):
-        #         if board[r][c]=="O":
-        #             val_idx.append((r,c))           
-
-        # def dfs(r,c):
-        #     if r <=0 or r>=row_len-1 or c<=0 or c>=col_len-1 or (r,c) in visited or board[r][c]=="X":
-        #         return
-        #     board[r][c]="X"
-        #     visited.add((r,c)) 
-
-        #     dfs (r-1,c)    
-        #     dfs (r+1,c)    
-        #     dfs (r,c-1)    
-        #     dfs (r,c+1) 
-
-
-        # for (r,c) in val_idx:
-        #     dfs(r,c)       
-
-
         
