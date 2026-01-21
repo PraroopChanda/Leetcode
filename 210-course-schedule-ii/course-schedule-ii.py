@@ -10,7 +10,7 @@ class Solution:
         def dfs(cr):
             if cr in visited:
                 return False
-            if cr in output: ## meaning it can be done
+            if cr in output:
                 return True 
             visited.add(cr)      
             for nei in premap[cr]:
