@@ -5,20 +5,17 @@ class Solution:
 
         for r,c in prerequisites:    
             premap[r].append(c)
-        
-        print(premap)
         visited=set()
 
         def dfs(r):
+            if r in visited:  ## base case for detecting cycles
+                return False
+            visited.add(r)    
             for nei in premap[r]:
-                if nei in visited: 
-                    return False
-                visited.add(nei)
                 if not dfs(nei): 
                     return False
-                visited.remove(nei)
-                premap[r].remove(nei)   
-
+            visited.remove(r)
+            premap[r]=[]  
             return True
 
         for r in range(numCourses):
