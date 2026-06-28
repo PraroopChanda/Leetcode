@@ -1,45 +1,58 @@
 class Twitter:
+
     def __init__(self):
-        self.time=0 ## will be taking negative values to build a max heap
-        self.tweetmap=defaultdict(list) ## (userID: [time,tweetId])
-        self.followermap=defaultdict(set)
 
-    def postTweet(self, userId: int, tweetId: int) -> None:
-        self.tweetmap[userId].append([self.time,tweetId])
-        self.time-=1 ## will be taking negative values to build a max heap
-        if userId==2:
-            print(self.tweetmap[2])
-    def getNewsFeed(self, userId: int) -> List[int]:
-        output=[]
-        self.followermap[userId].add(userId) ## because we want to consider tweets for the same user Id as well
-        max_heap=[]
-        for followeeid in self.followermap[userId]:
-            if followeeid in self.tweetmap: ## basically if it made any tweets
-                last_index=len(self.tweetmap[followeeid])-1
-                time, tweetid=self.tweetmap[followeeid][last_index]
-                max_heap.append([time,tweetid,followeeid,last_index-1]) ## adding followeeid and last_index as well to later index more values (going from last to first)
-        heapq.heapify(max_heap)
-        while max_heap and len(output)<10:
-            time,tweetid,followeeid,last_index=heapq.heappop(max_heap)
-            output.append(tweetid)
-            if last_index>=0: ## meaing more tweets are there for that followee 
-                time,tweetid=self.tweetmap[followeeid][last_index]
-                heapq.heappush(max_heap,[time,tweetid,followeeid,last_index-1])
-
-        return output       
-    def follow(self, followerId: int, followeeId: int) -> None:
-        self.followermap[followerId].add(followeeId)
-
-    def unfollow(self, followerId: int, followeeId: int) -> None:
-        if followeeId in self.followermap[followerId]:
-            self.followermap[followerId].remove(followeeId)
-# '''
-# LOGIC --> from all the followe list , first take the last index values (that would be the most recent according to that user)
-# Next --> put all values in a maxheap and get the most recent value and then also push other value for that followe in that heap
-# pushing other values from that followe, will still result in most receent value among followes (because if it not recent it won't be picked)
-# '''            
+        self.followers=defaultdict(set)
+        self.tweetmap=defaultdict(list)
+        self.count=0 ## this is important as this will be used for keeping a track of when 
         
 
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        if userId in self.tweetmap:
+            self.tweetmap[userId].append((tweetId,self.count)) ## tweet,tweet_number(used for getting latest)
+        else:
+            list_1=[]
+            list_1.append((tweetId,self.count))
+            self.tweetmap[userId]=list_1        
+
+        self.count-=1 ## because we are using min heap for max , taking negative    
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        res=[]
+        min_heap=[]
+        self.followers[userId].add(userId) ## because i follow myself as well
+
+        for followeId in self.followers[userId]: ## take the latest first, basically the last added for each one
+            len_1=len(self.tweetmap[followeId])
+            if len_1!=0:
+                tweetID,count=self.tweetmap[followeId][-1] ## basically i am getting the latest from all followers
+                min_heap.append([count,tweetID,followeId,len_1-2]) ## tweetcount, tweetID,next index to use
+
+        heapq.heapify(min_heap)
+        k=10
+        while min_heap and k:
+            _,tweetID,followeId,index=heapq.heappop(min_heap)
+            res.append(tweetID)
+            if index>-1:
+                tweetID,count=self.tweetmap[followeId][index]
+                heapq.heappush(min_heap,[count,tweetID,followeId,index-1])
+            k-=1    
+
+        return res               
+
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        if followerId in self.followers:
+            self.followers[followerId].add(followeeId)
+        else:
+            frs=set()
+            frs.add(followeeId)
+            self.followers[followerId]=frs    
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        if followeeId in self.followers[followerId]:
+            self.followers[followerId].remove(followeeId)
+        
 
 # Your Twitter object will be instantiated and called as such:
 # obj = Twitter()
